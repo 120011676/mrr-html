@@ -1,0 +1,9 @@
+version: '3.2'
+services:
+  html:
+    image: mrr-html
+    build: .
+#    environment:
+#      - MRR_SERVER_BASE_URL=https://localhost:8080
+    ports:
+      - "80:80"
