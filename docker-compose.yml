@@ -3,7 +3,7 @@ services:
   html:
     image: mrr-html
     build: .
-#    environment:
-#      - MRR_SERVER_BASE_URL=https://localhost:8080
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/nginx.conf
     ports:
       - "80:80"
