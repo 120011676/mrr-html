@@ -8,6 +8,6 @@ RUN apk --update add ca-certificates && \
     ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime && \
     echo ${TZ} > /etc/timezone
 
-COPY html /usr/share/nginx/html
+#COPY html /usr/share/nginx/html
 
 EXPOSE 80

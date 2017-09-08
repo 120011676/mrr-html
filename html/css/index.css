@@ -1,0 +1,64 @@
+.citys {
+    height: 30px;
+}
+
+.citys ul {
+    list-style-type: none;
+}
+
+.citys ul li {
+    width: 50px;
+    float: left;
+    border: thin solid #eee;
+    text-align: center;
+}
+
+.citys ul .select {
+    background-color: #ccc;
+    color: #fff;
+}
+
+.floors {
+    height: 30px;
+}
+
+.floors ul {
+    list-style-type: none;
+}
+
+.floors ul li {
+    width: 50px;
+    float: left;
+    border: thin solid #eee;
+    text-align: center;
+}
+
+.floors ul .select {
+    background-color: #ccc;
+    color: #fff;
+}
+
+.rooms {
+    height: 30px;
+}
+
+.rooms ul {
+    list-style-type: none;
+}
+
+.rooms ul li {
+    width: 200px;
+    float: left;
+    border: thin solid #eee;
+    text-align: center;
+}
+
+.rooms ul .select {
+    background-color: #ccc;
+    color: #fff;
+}
+
+.meet_data {
+    margin: auto;
+    padding: 0;
+}

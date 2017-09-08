@@ -1,3 +1,8 @@
+.DS_Store
 .git/
 .gitignore
-.DS_Store
+.dockerignore
+.idea/
+docker-compose.yml
+Dockerfile
+README.md

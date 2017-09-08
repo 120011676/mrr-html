@@ -1,9 +1,30 @@
 version: '3.2'
 services:
-  html:
-    image: mrr-html
-    build: .
-    volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/nginx.conf
+  server:
+    image: mrr-golang
+    networks:
+      - mrr
+    environment:
+      - MONGO_HOSTNAME=mongdb
+      - MONGO_DB=mrr
     ports:
-      - "80:80"
+      - "8080:8080"
+  mongdb:
+    image: mongo
+    networks:
+      - mrr
+    ports:
+      - 27017:27017
+  html:
+     image: mrr-html
+     build: .
+     networks:
+       - mrr
+     volumes:
+       - ./nginx/:/etc/nginx/conf.d/
+       - ./html/:/usr/share/nginx/html/
+     ports:
+       - "80:80"
+networks:
+  mrr:
+    driver: bridge

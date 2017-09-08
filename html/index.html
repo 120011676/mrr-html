@@ -1,148 +1,212 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<title>会议室预订系统--让想象发生</title>
-	<style type="text/css">
-		.citys{
-			height: 30px;
-		}
-		.citys ul{
-			list-style-type: none;
-		}
-		.citys ul li{
-			width: 50px;
-			float: left;
-			border: thin solid #eee;
-			text-align: center;
-		}
-		.citys ul .select{
-			background-color: #ccc;
-			color: #fff;
-		}
-		.floors{
-			height: 30px;
-		}
-		.floors ul{
-			list-style-type: none;
-		}
-		.floors ul li{
-			width: 50px;
-			float: left;
-			border: thin solid #eee;
-			text-align: center;
-		}
-		.floors ul .select{
-			background-color: #ccc;
-			color: #fff;
-		}
-		.rooms{
-			height: 30px;
-		}
-		.rooms ul{
-			list-style-type: none;
-		}
-		.rooms ul li{
-			width: 200px;
-			float: left;
-			border: thin solid #eee;
-			text-align: center;
-		}
-		.rooms ul .select{
-			background-color: #ccc;
-			color: #fff;
-		}
+    <meta charset="utf-8">
+    <title>长虹会议室预订系统--让想象发生</title>
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/popper.min.js"
+            integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"></script>
+    <link rel="stylesheet" href="js/bootstrap-4.0.0-beta-dist/css/bootstrap.min.css"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M">
+    <script src="js/bootstrap-4.0.0-beta-dist/js/bootstrap.min.js"
+            integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"></script>
+    <script type="text/javascript" src="js/jquery-validation-1.17.0/dist/jquery.validate.min.js"></script>
+    <!--<script type="text/javascript" src="js/d3/d3.min.js"></script>-->
+    <style type="text/css">
+        .menu .citys, .menu .floors, .info {
+            margin-top: 10px;
+        }
 
-		.meet_data{
-			margin: auto;
-			padding: 0;
-		}
-	</style>
+        .menu .citys .btn, .menu .floors .btn {
+            width: 60px;
+        }
+
+        .menu .citys .btn, .menu .floors .btn, .date .btn, .mrr_add .add_citys .btn, .mrr_add .add_floors .btn, .mrr_add .add_rooms .btn {
+            margin-left: 10px;
+            margin-bottom: 10px;
+        }
+
+        .mrr_add .add_citys .btn:first-child, .mrr_add .add_floors .btn:first-child, .mrr_add .add_rooms .btn:first-child {
+            margin-left: 0;
+        }
+
+        .date {
+            margin-top: 10px;
+        }
+
+        .svg_info {
+            width: 100%;
+            version: 1.2;
+        }
+
+        .svg_info .mind {
+            stroke: #adebbb;
+            stroke-width: 1px;
+            stroke-linecap: round;
+            stroke-dasharray: 1, 5;
+        }
+
+        .svg_info .solid {
+            stroke: #28a745;
+            stroke-width: 1px;
+            stroke-linecap: round;
+        }
+
+        .svg_info .text {
+            text-anchor: end;
+            fill: #28a745;
+        }
+
+        .svg_info .line {
+            stroke: #28a745;
+            stroke-width: 1px;
+            stroke-linecap: round;
+        }
+
+        .svg_info .time_line {
+            fill: #28a745;
+        }
+
+        .info {
+            width: 98%;
+            margin: 0 auto
+        }
+
+        .div_charts {
+            margin-top: 10px;
+        }
+
+        .mrr_add {
+            display: none;
+            color: #28a745;
+        }
+
+        .reserve {
+            margin-top: 10px;
+            text-align: right;
+            margin-right: 30px;
+        }
+
+        .modal-header .close {
+            color: #28a745;
+        }
+
+        .btn-light {
+            color: #28a745;
+        }
+
+        .form-control {
+            color: #28a745;
+            border: 1px solid #28a745;
+        }
+
+        .form-control:focus {
+            color: #28a745;
+            border: 1px solid #28a745;
+            box-shadow: 0 0 5px #28a745;
+        }
+
+        input.error {
+            color: red;
+            border: 1px solid red;
+        }
+
+        label.error {
+            color: red;
+        }
+
+        .error:focus {
+            color: red;
+            border: 1px solid red;
+            box-shadow: 0 0 5px red;
+        }
+
+        .red_border {
+            color: red;
+            border-color: red;
+        }
+    </style>
 </head>
 <body>
-	<div class="citys"></div>
-	<div class="floors"></div>
-	<div class="rooms"></div>
-	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript" src="js/config.js"></script>
-	<script type="text/javascript">
-		$(function () {
-			var citys_lis = "";
-			var floors_uls = "";
-			var rooms_uls = "";
-			for (var i = 0; i < citys.length; i++) {
-				citys_lis +="<li>"+citys[i].name+"</li>";
-				var floor_lis = "";
-				for (var j = 0; j < citys[i].floors.length; j++) {
-					floor_lis += "<li>"+citys[i].floors[j].name+"</li>";
-					var rooms_lis = "";
-					for (var k = 0; k < citys[i].floors[j].rooms.length; k++) {
-						rooms_lis += '<li>' + citys[i].floors[j].rooms[k]+'<ul class="'+citys[i].floors[j].rooms[k]+'_data meet_data"></ul></li>';
-					}
-					rooms_uls += '<ul class="'+'rooms_'+citys[i].floors[j].name+'" style="display:none;">' + rooms_lis + '</ul>';
-				}
-				floors_uls += '<ul class="'+'floors_'+citys[i].name+'" style="display:none;">'+floor_lis+"</ul>";
-			}
-			
-			function setData(k,v){
-				if (localStorage) {
-					localStorage[k] = v;
-				}
-			}
+<div class="menu"></div>
+<div class="date"></div>
+<div>
+    <div class="reserve">
+        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target=".mrr_add"
+                data-whatever="@mdo">预订
+        </button>
+    </div>
+    <div class="mrr_add modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">预订会议室</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="add_citys" class="control-label">城市:</label>
+                            <div id="add_citys" class="add_citys">
 
-			function getData(k){
-				if (localStorage) {
-					return localStorage[k];
-				}
-				return null;
-			}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add_floors" class="control-label">楼层:</label>
+                            <div id="add_floors" class="add_floors">
 
-			function query(city,floor,room){
-				$.post("/mrr/query",{
-					city:city,
-					floor:floor,
-					room:room
-				},function(data){
-					var data = $.parseJSON(data);
-					if (data.status && data.data) {
-						var da = data.data;
-						for (var i = 0; i < da.length; i++) {
-							console.log(".rooms>ul>li>ul[class="+da[i].room+"_data]");
-							$(".rooms>ul>li>."+da[i].room+"_data").append('<li>'+da[i].startDate+'-'+da[i].endDate+'</li>');
-						}
-					}
-				});
-			}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add_rooms" class="control-label">会议室:</label>
+                            <div id="add_rooms" class="add_rooms">
 
-			$(".citys").html('<ul>'+citys_lis+"</ul>").find("ul>li").on("click",function(){
-				$(this).parent().find("li").removeClass("select");
-				$(this).addClass("select");
-				$(".rooms>ul").hide();
-				$(".floors>ul").hide();
-				$('.floors_'+$(this).html()).show().find(".select").click();
-				setData('city',$(this).html());
-			});
-			$(".floors").html(floors_uls).find("ul>li").on("click",function(){
-				$(this).parent().find("li").removeClass("select");
-				$(this).addClass("select");
-				$(".rooms>ul").hide();
-				$('.rooms_'+$(this).html()).show();
-				setData('floor',$(this).html());
-				query($(".citys>ul>li[class=select]").html(),$(".floors>ul>li[class=select]").html(),$(".rooms>ul>li[class=select]").html());
-			});
-			$(".rooms").html(rooms_uls).find("ul>li").on("click",function(){
-				$(this).parent().find("li").removeClass("select");
-				$(this).addClass("select");
-			});
-			var c = getData("city");
-			if (c) {
-				$(".citys>ul>li:contains('"+c+"')").click();
-			}
-			var f = getData("floor");
-			if (f) {
-				var ful = $(".floors>ul:visible>li:contains('"+f+"')").click();
-			}
-		});
-	</script>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input_startDate" class="control-label">预订开始时间:</label>
+                            <input name="startDate" class="form-control" id="input_startDate"
+                                   type="datetime-local" pattern="yyyy-MM-dd HH:mm:ss" required value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="input_endDate" class="control-label">预订结束时间:</label>
+                            <input name="endDate" class="form-control" id="input_endDate"
+                                   type="datetime-local" pattern="yyyy-MM-dd HH:mm:ss" required value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="input_password" class="control-label">预订密码(取消预订时需要):</label>
+                            <input name="password" class="form-control" id="input_password"
+                                   type="password" autocomplete="new-password" required value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="input_conferenceName" class="control-label">会议名称:</label>
+                            <input name="conferenceName" class="form-control" id="input_conferenceName" value="cc">
+                        </div>
+                        <div class="form-group">
+                            <label for="input_people" class="control-label">预订人姓名:</label>
+                            <input name="people" class="form-control" id="input_people" value="aa">
+                        </div>
+                        <div class="form-group">
+                            <label for="input_phone" class="control-label">预订人电话:</label>
+                            <input name="phone" class="form-control" id="input_phone" value="15812345678">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-success add_save">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="div_charts">
+    <div class="info"></div>
+</div>
+<script type="text/javascript" src="js/html/index.js"></script>
 </body>
 </html>
