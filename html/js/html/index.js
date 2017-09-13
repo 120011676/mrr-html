@@ -1,4 +1,14 @@
 $(function () {
+
+    $.ajaxSetup({
+        beforeSend: function () {
+            NProgress.start();
+        },
+        complete: function () {
+            NProgress.done();
+        }
+    });
+
     Date.prototype.format = function (fmt) {
         var o = {
             "M+": this.getMonth() + 1, //月份
@@ -20,70 +30,74 @@ $(function () {
         var yhh = 40;
         var sh = yh + yhh;
         var left = "5%";
-        var svg = $(document.createElementNS('http://www.w3.org/2000/svg', 'svg')).addClass('svg_info').attr("height", sh + 50).append($('<g/>').append($('<line y1="0" y2="' + sh + '" class="solid"/>').attr("x1", left).attr("x2", left)).append($('<line y1="' + sh + '" x2="100%" y2="' + sh + '" class="solid"/>').attr("x1", left)));
-        var g = $('<g/>').appendTo(svg);
-        var xGz = $('<g/>').appendTo(svg);
-        var xGText = $('<g/>').appendTo(svg);
-        for (var k = 0, m = yh / data.y.length; k < data.y.length; k++) {
-            var h = (yh - (m * (k + 1))) + yhh;
-            svg.data(data.y[k] + "_y", h);
-            $('<line x1="' + left + '" y1="' + h + '" x2="100%" y2="' + h + '" class="mind"/>').appendTo(g);
-            $('<line y1="' + h + '" y2="' + h + '" class="solid"/>').attr("x1", (parseInt(left.split("%")) - 0.3) + "%").attr("x2", left).appendTo(xGz);
-            $('<text y="' + (h + 5) + '" class="text"/>').attr("x", (parseInt(left.split("%")) - 1) + "%").append(data.y[k]).appendTo(xGText);
-        }
-        var yGz = $('<g/>').appendTo(svg);
-        var yGText = $('<g/>').appendTo(svg);
+        var ns = 'http://www.w3.org/2000/svg';
         var len = 25;
         var xg = (100 - parseInt(left.split("%"))) / len;
-        for (var m = 0; m < len; m++) {
-            var xgg = ((xg * m) + parseInt(left.split("%"))) + "%";
-            var xggt = ((xg * m) + parseInt(left.split("%")) + 0.8) + "%";
-            $('<line y1="' + sh + '" y2="' + (sh + 3) + '" class="solid"/>').attr("x1", xgg).attr("x2", xgg).appendTo(yGz);
-            $('<text y="' + (sh + 20) + '" class="text"/>').attr("x", (parseInt(left.split("%")) - 1) + "%").attr("x", xggt).append(m >= 24 ? m - 24 < 10 ? "0" + (m - 24) : (m - 24) : m < 10 ? "0" + m : m).appendTo(yGText);
-        }
-        if (data) {
-            var yGTimeG = $('<g/>').appendTo(svg);
-            var zxg = (100 - parseInt(left.split("%"))) / (1000 * 60 * 60 * 25);
-            var startDate = new Date($('.date>.btn-success').data('data').getTime());
-            startDate.setHours(0);
-            startDate.setMinutes(0);
-            startDate.setSeconds(0);
-            var endDate = new Date($('.date>.btn-success').data('data').getTime());
-            endDate.setHours(23);
-            endDate.setMinutes(59);
-            endDate.setSeconds(59);
-            for (var z = 0; z < data.data.length; z++) {
-                console.log(data.data[z])
-                var yGTime = $('<g class="time_line"/>').data('data', data.data[z]).appendTo(yGTimeG);
-                var y = svg.data(data.data[z].room + "_y");
-                var sd = new Date(Date.parse(data.data[z].startDate.replace(/-/g, "/")));
-                var x1 = sd.getTime() < startDate.getTime() ? left : ((Math.abs(startDate.getTime() - sd.getTime()) * zxg) + parseInt(left.split("%"))) + "%";
-                $('<circle r="2.5" class="circle"/>').attr("cx", x1).attr("cy", y).appendTo(yGTime);
-                var ed = new Date(Date.parse(data.data[z].endDate.replace(/-/g, "/")));
-                var x2 = (ed.getTime() > endDate.getTime() ? ((xg * (len - 1)) + parseInt(left.split("%"))) : ((Math.abs(startDate.getTime() - ed.getTime()) * zxg) + parseInt(left.split("%")))) + "%";
-                $('<line class="line"/>').attr("x1", x1).attr("x2", x2).attr("y1", y).attr("y2", y).appendTo(yGTime);
-                $('<circle r="2.5" class="circle"/>').attr("cx", x2).attr("cy", y).appendTo(yGTime);
+        var info = $(".info").empty();
+        info.append($(document.createElementNS(ns, 'svg')).addClass('svg_info').attr("height", sh + 50).append($(document.createElementNS(ns, 'g')).append($(document.createElementNS(ns, 'line')).attr("x1", left).attr('y1', '0').attr("x2", left).attr('y2', sh).addClass('solid')).append($(document.createElementNS(ns, 'line')).attr("x1", left).attr('y1', sh).attr("x2", '100%').attr('y2', sh).addClass('solid'))).append(function () {
+            var g = $(document.createElementNS(ns, 'g'));
+            var m = yh / data.y.length;
+            data.y.forEach(function (y, i) {
+                var h = (yh - (m * (i + 1))) + yhh;
+                info.data(y, h);
+                g.append($(document.createElementNS(ns, 'line')).attr('x1', left).attr('y1', h).attr('x2', '100%').attr('y2', h).addClass('mind')).append($(document.createElementNS(ns, 'line')).attr("x1", (parseInt(left.split("%")) - 0.3) + "%").attr('y1', h).attr("x2", left).attr('y2', h).addClass('solid')).append($(document.createElementNS(ns, 'text')).attr("x", (parseInt(left.split("%")) - 1) + "%").attr('y', h + 5).addClass('text').append(y));
+            });
+            return g;
+        }()).append(function () {
+            var g = $(document.createElementNS(ns, 'g'));
+            var xg = (100 - parseInt(left.split("%"))) / len;
+            for (var i = 0; i < len; i++) {
+                var xgg = ((xg * i) + parseInt(left.split("%"))) + "%";
+                var xggt = ((xg * i) + parseInt(left.split("%")) + 0.8) + "%";
+                g.append($(document.createElementNS(ns, 'line')).attr("x1", xgg).attr('y1', sh).attr("x2", xgg).attr('y2', sh + 3).addClass('solid')).append($(document.createElementNS(ns, 'text')).attr("x", xggt).attr('y', sh + 20).addClass('text').append(i >= 24 ? i - 24 < 10 ? "0" + (i - 24) : (i - 24) : i < 10 ? "0" + i : i));
             }
-        }
-        $(".info").html(svg.prop("outerHTML")).find(".time_line").hover(function () {
-            // $(this).children().css({'stroke': 'red'});
-        }, function () {
-            // $(this).children().removeAttr('style');
-        }).on('click', function () {
-            console.log($(this).prop("outerHTML"))
-            $('.svg_info').data('select', $(this).data('data'));
-            $(this).children().css({'stroke': 'red'});
-        });
-
-        $('body').keydown(function (e) {
-            if (e.which === 8) {
-                var select = $('.svg_info').data('select');
-                console.log(select)
-                // $.post('', {}, function () {
-                //
-                // });
+            return g;
+        }()).append(function () {
+            var g = $(document.createElementNS(ns, 'g'));
+            if (data) {
+                var zxg = (100 - parseInt(left.split("%"))) / (1000 * 60 * 60 * 25);
+                var time = $('.date>.btn-success').data('data').getTime();
+                var startDate = new Date(time);
+                startDate.setHours(0);
+                startDate.setMinutes(0);
+                startDate.setSeconds(0);
+                var endDate = new Date(time);
+                endDate.setHours(23);
+                endDate.setMinutes(59);
+                endDate.setSeconds(59);
+                data.data.forEach(function (line) {
+                    var sd = new Date(Date.parse(line.startDate.replace(/-/g, "/")));
+                    var x1 = sd.getTime() < startDate.getTime() ? left : ((Math.abs(startDate.getTime() - sd.getTime()) * zxg) + parseInt(left.split("%"))) + "%";
+                    var ed = new Date(Date.parse(line.endDate.replace(/-/g, "/")));
+                    var x2 = (ed.getTime() > endDate.getTime() ? ((xg * (len - 1)) + parseInt(left.split("%"))) : ((Math.abs(startDate.getTime() - ed.getTime()) * zxg) + parseInt(left.split("%")))) + "%";
+                    var y = info.data(line.room);
+                    g.append($(document.createElementNS(ns, 'g')).data('data', line).addClass('time_line').append($(document.createElementNS(ns, 'circle')).attr('r', 2.5).attr("cx", x1).attr("cy", y).addClass('circle')).append($(document.createElementNS(ns, 'line')).attr("x1", x1).attr("x2", x2).attr("y1", y).attr("y2", y).addClass('line')).append($(document.createElementNS(ns, 'circle')).attr('r', 2.5).attr("cx", x2).attr("cy", y).addClass('circle')).on('click', function () {
+                        var data = $(this).data('data');
+                        var info = $('.svg_info');
+                        if (data === info.data('select')) {
+                            info.removeData('select');
+                            $(this).removeClass('line_select');
+                            return;
+                        }
+                        info.data('select', $(this).data('data'));
+                        $(this).addClass('line_select').siblings('g').removeClass('line_select');
+                    }).popover({
+                        trigger: 'hover',
+                        placement: 'auto',
+                        html: true,
+                        title: function () {
+                            return $(this).data('data').conferenceName;
+                        },
+                        delay: {show: 100, hide: 100},
+                        content: function () {
+                            var timeLine = $(this).data('data');
+                            return '<ul class="time_line_alt"><li>' + timeLine.city + '</li><li>' + timeLine.floor + '</li><li>' + timeLine.room + '</li><li>' + timeLine.startDate + '</li><li>' + timeLine.endDate + '</li><li>' + timeLine.people + '</li><li>' + timeLine.phone + '</li><li>' + timeLine.createDate + '</li></ul>';
+                        }
+                    }));
+                });
             }
-        });
+            return g;
+        }));
     }
 
     function query(city, floor, startDate, endDate, rooms) {
@@ -120,7 +134,8 @@ $(function () {
             endDate.setHours(23);
             endDate.setMinutes(59);
             endDate.setSeconds(59);
-            query($('.menu>.citys>.btn-success').data('data').name, $('.menu>.floors>.btn-success').data('data').name, startDate, endDate, $('.menu>.floors>.btn-success').data('data').rooms);
+            var floor = $('.menu>.floors>.btn-success').data('data');
+            floor ? query($('.menu>.citys>.btn-success').data('data').name, floor.name, startDate, endDate, floor.rooms) : null;
         }).appendTo($('.date'));
     }
 
@@ -139,11 +154,12 @@ $(function () {
                         $(this).removeClass("btn-outline-success").addClass("btn-success").siblings().removeClass("btn-success").addClass('btn-outline-success');
                         var floor = $(this).data("data");
                         localStorage ? localStorage.setItem("floor", floor.name) : null;
-                        var startDate = new Date($('.date>.btn-success').data('data').getTime());
+                        var time = $('.date>.btn-success').data('data').getTime();
+                        var startDate = new Date(time);
                         startDate.setHours(0);
                         startDate.setMinutes(0);
                         startDate.setSeconds(0);
-                        var endDate = new Date($('.date>.btn-success').data('data').getTime());
+                        var endDate = new Date(time);
                         endDate.setHours(23);
                         endDate.setMinutes(59);
                         endDate.setSeconds(59);
@@ -161,18 +177,20 @@ $(function () {
         $('.mrr_add .add_floors').empty();
         var addCitySelects = $('.mrr_add .add_citys>.btn-success').data('data');
         var addFloorsSelect = $('.mrr_add .add_floors>.btn-success').data('data');
-        var menuCitySelects = $(".menu>.floors>.btn-success").data("data");
+        var menuCitySelects = $(".menu>.citys>.btn-success").data("data");
         var menuFloorsSelect = $(".menu>.floors>.btn-success").data("data");
         if (addCitySelects && addFloorsSelect && menuCitySelects && menuFloorsSelect && menuCitySelects.name === addCitySelects.name && menuFloorsSelect.name === addFloorsSelect.name) {
             return;
         }
         var addCitys = $('.mrr_add .add_citys').empty();
         $('.menu>.citys').data('data').forEach(function (city) {
-            $('<buttom type="buttom" class="btn btn-sm red_border"></buttom>').append(city.name).addClass($(".menu>.citys>.btn-success").data("data") && city.name === $(".menu>.citys>.btn-success").data("data").name ? 'btn-success' : 'btn-outline-success').data("data", city).on("click", function () {
+            var data = $(".menu>.citys>.btn-success").data("data");
+            $('<buttom type="buttom" class="btn btn-sm red_border"></buttom>').append(city.name).addClass(data && city.name === data.name ? 'btn-success' : 'btn-outline-success').data("data", city).on("click", function () {
                 $(this).removeClass('red_border').removeClass("btn-outline-success").addClass("btn-success").siblings().removeClass('red_border').removeClass("btn-success").addClass('btn-outline-success');
                 var addFloors = $('.mrr_add .add_floors').empty();
                 $(this).data('data').floors.forEach(function (floor) {
-                    $('<buttom type="buttom" class="btn btn-sm red_border"></buttom>').append(floor.name).addClass($(".menu>.floors>.btn-success").data("data") && floor.name === $(".menu>.floors>.btn-success").data("data").name ? 'btn-success' : 'btn-outline-success').data("data", floor).on("click", function () {
+                    var data = $(".menu>.floors>.btn-success").data("data");
+                    $('<buttom type="buttom" class="btn btn-sm red_border"></buttom>').append(floor.name).addClass(data && floor.name === data.name ? 'btn-success' : 'btn-outline-success').data("data", floor).on("click", function () {
                         $(this).removeClass('red_border').removeClass("btn-outline-success").addClass("btn-success").siblings().removeClass('red_border').removeClass("btn-success").addClass('btn-outline-success');
                         var addRooms = $('.mrr_add .add_rooms').empty();
                         $(this).data('data').rooms.forEach(function (room) {
@@ -190,6 +208,10 @@ $(function () {
         $(".mrr_add form").valid();
     }).on('hide.bs.modal', function () {
         $('.mrr_add .modal-body .alert').alert('close');
+    }).keydown(function (e) {
+        if (e.which === 13 || e.which === 108) {
+            $(this).find('.add_save').click();
+        }
     });
 
     $('.mrr_add .add_save').on('click', function () {
@@ -199,6 +221,7 @@ $(function () {
         if (!($(".mrr_add form").valid() && addCitySelects && addFloorsSelect && addRoomsSelect)) {
             return;
         }
+        $(this).attr('disabled', 'disabled');
         $.post('mrr/reserve', {
             city: addCitySelects.name,
             floor: addFloorsSelect.name,
@@ -210,6 +233,7 @@ $(function () {
             people: $('.mrr_add input[name=people]').val(),
             phone: $('.mrr_add input[name=phone]').val()
         }, function (data) {
+            $('.mrr_add .add_save').removeAttr('disabled');
             data = $.parseJSON(data);
             if (data && data.status) {
                 $('.mrr_add').modal('hide');
@@ -219,4 +243,56 @@ $(function () {
             $('<div class="alert alert-danger" role="alert"/>').append(data.msg).append('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>').appendTo($('.mrr_add .modal-body'));
         });
     });
+
+    $('.reserve .btn_mrr_del').on('click', function () {
+        var data = $('.svg_info').data('select');
+        var model = $('.mrr_del');
+        if (data && model.is(":hidden")) {
+            model.find('input[name=id]').val(data.id);
+            model.find('input[name=city]').val(data.city);
+            model.find('input[name=floor]').val(data.floor);
+            model.find('input[name=room]').val(data.room);
+            model.find('input[name=startDate]').val(data.startDate);
+            model.find('input[name=endDate]').val(data.endDate);
+            model.find('input[name=conferenceName]').val(data.conferenceName);
+            model.find('input[name=people]').val(data.people);
+            model.find('input[name=phone]').val(data.phone);
+            model.find('input[name=createDate]').val(data.createDate);
+            model.modal('show');
+        }
+    });
+
+    $('body').keydown(function (e) {
+        if (e.which === 8 || e.which === 127) {
+            $('.reserve .btn_mrr_del').click();
+        }
+    }).find('.del_save').on('click', function () {
+        if (!($(".mrr_del form").valid())) {
+            return;
+        }
+        $(this).attr('disabled', 'disabled');
+        $.post('mrr/cancel', {
+            id: $('.svg_info').data('select').id,
+            password: $('.mrr_del input[name=password]').val()
+        }, function (data) {
+            $('.mrr_del .del_save').removeAttr('disabled');
+            data = $.parseJSON(data);
+            if (data && data.status) {
+                $('.mrr_del').modal('hide');
+                $('.date>.btn-success').click();
+                return;
+            }
+            $('.mrr_del .modal-body .alert').alert('close');
+            $('<div class="alert alert-danger" role="alert"/>').append(data.msg).append('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>').appendTo($('.mrr_del .modal-body'));
+        });
+    });
+
+    $('.mrr_del').on('shown.bs.modal', function () {
+        $(".mrr_del form").valid();
+    }).keydown(function (e) {
+        if (e.which === 13 || e.which === 108) {
+            $(this).find('.del_save').click();
+        }
+    });
+
 });

@@ -3,6 +3,8 @@
 <head>
     <meta charset="utf-8">
     <title>长虹会议室预订系统--让想象发生</title>
+    <link rel='stylesheet' href='js/nprogress-0.2.0/nprogress.css'/>
+    <script src='js/nprogress-0.2.0/nprogress.js'></script>
     <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
     <script src="js/popper.min.js"
             integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"></script>
@@ -11,127 +13,15 @@
     <script src="js/bootstrap-4.0.0-beta-dist/js/bootstrap.min.js"
             integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"></script>
     <script type="text/javascript" src="js/jquery-validation-1.17.0/dist/jquery.validate.min.js"></script>
-    <!--<script type="text/javascript" src="js/d3/d3.min.js"></script>-->
-    <style type="text/css">
-        .menu .citys, .menu .floors, .info {
-            margin-top: 10px;
-        }
-
-        .menu .citys .btn, .menu .floors .btn {
-            width: 60px;
-        }
-
-        .menu .citys .btn, .menu .floors .btn, .date .btn, .mrr_add .add_citys .btn, .mrr_add .add_floors .btn, .mrr_add .add_rooms .btn {
-            margin-left: 10px;
-            margin-bottom: 10px;
-        }
-
-        .mrr_add .add_citys .btn:first-child, .mrr_add .add_floors .btn:first-child, .mrr_add .add_rooms .btn:first-child {
-            margin-left: 0;
-        }
-
-        .date {
-            margin-top: 10px;
-        }
-
-        .svg_info {
-            width: 100%;
-            version: 1.2;
-        }
-
-        .svg_info .mind {
-            stroke: #adebbb;
-            stroke-width: 1px;
-            stroke-linecap: round;
-            stroke-dasharray: 1, 5;
-        }
-
-        .svg_info .solid {
-            stroke: #28a745;
-            stroke-width: 1px;
-            stroke-linecap: round;
-        }
-
-        .svg_info .text {
-            text-anchor: end;
-            fill: #28a745;
-        }
-
-        .svg_info .line {
-            stroke: #28a745;
-            stroke-width: 1px;
-            stroke-linecap: round;
-        }
-
-        .svg_info .time_line {
-            fill: #28a745;
-        }
-
-        .info {
-            width: 98%;
-            margin: 0 auto
-        }
-
-        .div_charts {
-            margin-top: 10px;
-        }
-
-        .mrr_add {
-            display: none;
-            color: #28a745;
-        }
-
-        .reserve {
-            margin-top: 10px;
-            text-align: right;
-            margin-right: 30px;
-        }
-
-        .modal-header .close {
-            color: #28a745;
-        }
-
-        .btn-light {
-            color: #28a745;
-        }
-
-        .form-control {
-            color: #28a745;
-            border: 1px solid #28a745;
-        }
-
-        .form-control:focus {
-            color: #28a745;
-            border: 1px solid #28a745;
-            box-shadow: 0 0 5px #28a745;
-        }
-
-        input.error {
-            color: red;
-            border: 1px solid red;
-        }
-
-        label.error {
-            color: red;
-        }
-
-        .error:focus {
-            color: red;
-            border: 1px solid red;
-            box-shadow: 0 0 5px red;
-        }
-
-        .red_border {
-            color: red;
-            border-color: red;
-        }
-    </style>
+    <link rel="stylesheet" href="css/index.css"/>
 </head>
 <body>
 <div class="menu"></div>
 <div class="date"></div>
 <div>
     <div class="reserve">
+        <button type="button" class="btn btn-success btn-sm btn_mrr_del">删除
+        </button>
         <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target=".mrr_add"
                 data-whatever="@mdo">预订
         </button>
@@ -170,35 +60,99 @@
                         <div class="form-group">
                             <label for="input_startDate" class="control-label">预订开始时间:</label>
                             <input name="startDate" class="form-control" id="input_startDate"
-                                   type="datetime-local" pattern="yyyy-MM-dd HH:mm:ss" required value="">
+                                   type="datetime-local" pattern="yyyy-MM-dd HH:mm:ss" required="required">
                         </div>
                         <div class="form-group">
                             <label for="input_endDate" class="control-label">预订结束时间:</label>
                             <input name="endDate" class="form-control" id="input_endDate"
-                                   type="datetime-local" pattern="yyyy-MM-dd HH:mm:ss" required value="">
+                                   type="datetime-local" pattern="yyyy-MM-dd HH:mm:ss" required="required">
                         </div>
                         <div class="form-group">
                             <label for="input_password" class="control-label">预订密码(取消预订时需要):</label>
                             <input name="password" class="form-control" id="input_password"
-                                   type="password" autocomplete="new-password" required value="">
+                                   type="password" autocomplete="new-password" required="required">
                         </div>
                         <div class="form-group">
                             <label for="input_conferenceName" class="control-label">会议名称:</label>
-                            <input name="conferenceName" class="form-control" id="input_conferenceName" value="cc">
+                            <input name="conferenceName" class="form-control" id="input_conferenceName">
                         </div>
                         <div class="form-group">
                             <label for="input_people" class="control-label">预订人姓名:</label>
-                            <input name="people" class="form-control" id="input_people" value="aa">
+                            <input name="people" class="form-control" id="input_people">
                         </div>
                         <div class="form-group">
                             <label for="input_phone" class="control-label">预订人电话:</label>
-                            <input name="phone" class="form-control" id="input_phone" value="15812345678">
+                            <input name="phone" class="form-control" id="input_phone">
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-dismiss="modal">关闭</button>
                     <button type="button" class="btn btn-success add_save">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mrr_del modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">取消预订会议室</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <input name="id" type="hidden">
+                        <div class="form-group">
+                            <label for="input_password" class="control-label">预订密码(预订时填写的密码):</label>
+                            <input name="password" class="form-control" type="password" autocomplete="new-password"
+                                   required="required" title="">
+                        </div>
+                        <div class="form-group">
+                            <label for="input_citys" class="control-label">城市:</label>
+                            <input name="city" id="input_citys" class="form-control" disabled="disabled">
+                        </div>
+                        <div class="form-group">
+                            <label for="input_floors" class="control-label">楼层:</label>
+                            <input name="floor" id="input_floors" class="form-control" disabled="disabled">
+                        </div>
+                        <div class="form-group">
+                            <label for="input_rooms" class="control-label">会议室:</label>
+                            <input name="room" id="input_rooms" class="form-control" disabled="disabled">
+                        </div>
+                        <div class="form-group">
+                            <label for="input_startDate" class="control-label">预订开始时间:</label>
+                            <input name="startDate" class="form-control" disabled="disabled" title="">
+                        </div>
+                        <div class="form-group">
+                            <label for="input_endDate" class="control-label">预订结束时间:</label>
+                            <input name="endDate" class="form-control" disabled="disabled" title="">
+                        </div>
+                        <div class="form-group">
+                            <label for="input_conferenceName" class="control-label">会议名称:</label>
+                            <input name="conferenceName" class="form-control" disabled="disabled" title="">
+                        </div>
+                        <div class="form-group">
+                            <label for="input_people" class="control-label">预订人姓名:</label>
+                            <input name="people" class="form-control" disabled="disabled" title="">
+                        </div>
+                        <div class="form-group">
+                            <label for="input_phone" class="control-label">预订人电话:</label>
+                            <input name="phone" class="form-control" disabled="disabled" title="">
+                        </div>
+                        <div class="form-group">
+                            <label for="input_phone" class="control-label">创建时间:</label>
+                            <input name="createDate" class="form-control" disabled="disabled" title="">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-success del_save">删除</button>
                 </div>
             </div>
         </div>

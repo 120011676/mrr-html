@@ -1,64 +1,194 @@
-.citys {
-    height: 30px;
+.menu .citys, .menu .floors, .info {
+    margin-top: 10px;
 }
 
-.citys ul {
+.menu .citys .btn, .menu .floors .btn {
+    width: 60px;
+}
+
+.menu .citys .btn, .menu .floors .btn, .date .btn, .modal .add_citys .btn, .modal .add_floors .btn, .modal .add_rooms .btn {
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.modal .add_citys .btn:first-child, .modal .add_floors .btn:first-child, .modal .add_rooms .btn:first-child {
+    margin-left: 0;
+}
+
+.date {
+    margin-top: 10px;
+}
+
+.svg_info {
+    width: 100%;
+    version: 1.2;
+}
+
+.svg_info .mind {
+    stroke: #adebbb;
+    stroke-width: 1px;
+    stroke-linecap: round;
+    stroke-dasharray: 1, 5;
+}
+
+.svg_info .solid {
+    stroke: #28a745;
+    stroke-width: 1px;
+    stroke-linecap: round;
+}
+
+.svg_info .text {
+    text-anchor: end;
+    fill: #28a745;
+}
+
+.svg_info .line {
+    stroke-width: 1px;
+    stroke-linecap: round;
+}
+
+.svg_info .time_line {
+    fill: #28a745;
+    stroke: #28a745;
+}
+
+.svg_info .time_line:hover {
+    /*fill: #007bff;*/
+    /*stroke: #007bff;*/
+}
+
+.svg_info .time_line:hover > .line {
+    stroke-width: 2px;
+}
+
+.svg_info .time_line:hover > .circle {
+    r: 4;
+}
+
+.svg_info .line_select {
+    /*fill: #007bff;*/
+    /*stroke: #007bff;*/
+}
+
+.svg_info .line_select > .line {
+    stroke-width: 2px;
+}
+
+.svg_info .line_select > .circle {
+    r: 4;
+}
+
+.info {
+    width: 98%;
+    margin: 0 auto
+}
+
+.div_charts {
+    margin-top: 10px;
+}
+
+.modal {
+    display: none;
+    color: #28a745;
+    z-index: 3000;
+}
+
+.reserve {
+    margin-top: 10px;
+    text-align: right;
+    margin-right: 30px;
+}
+
+.modal-header .close {
+    color: #28a745;
+}
+
+.btn-light {
+    color: #28a745;
+}
+
+.form-control {
+    color: #28a745;
+    border: 1px solid #28a745;
+}
+
+.form-control:focus {
+    color: #28a745;
+    border: 1px solid #28a745;
+    box-shadow: 0 0 5px #28a745;
+}
+
+input.error {
+    color: red;
+    border: 1px solid red;
+}
+
+label.error {
+    color: red;
+}
+
+.error:focus {
+    color: red;
+    border: 1px solid red;
+    box-shadow: 0 0 5px red;
+}
+
+.red_border {
+    color: red;
+    border-color: red;
+}
+
+.popover {
+    border-color: #28a745;
+    color: #28a745;
+    box-shadow: 0 0 5px #28a745;
+}
+
+.popover .popover-header {
+    background-color: #ddffe5;
+    border-color: #c6ffd3;
+}
+
+.popover .popover-body {
+    color: #28a745;
+}
+
+.popover.bs-popover-auto[x-placement^=top] .arrow::before, .popover.bs-popover-top .arrow::before {
+    border-top-color: #28a745;
+}
+
+.popover.bs-popover-auto[x-placement^=bottom] .arrow::before, .popover.bs-popover-bottom .arrow::before {
+    border-bottom-color: #28a745;
+}
+
+.popover.bs-popover-auto[x-placement^=left] .arrow::before, .popover.bs-popover-left .arrow::before {
+    border-left-color: #28a745;
+}
+
+.popover.bs-popover-auto[x-placement^=right] .arrow::before, .popover.bs-popover-right .arrow::before {
+    border-right-color: #28a745;
+}
+
+.time_line_alt {
     list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 0;
 }
 
-.citys ul li {
-    width: 50px;
-    float: left;
-    border: thin solid #eee;
-    text-align: center;
+#nprogress .bar {
+    background: #28a745;
+    z-index: 5000;
 }
 
-.citys ul .select {
-    background-color: #ccc;
-    color: #fff;
+#nprogress .peg {
+    box-shadow: 0 0 10px #28a745, 0 0 5px #28a745;
 }
 
-.floors {
-    height: 30px;
+#nprogress .spinner-icon {
+    border-top-color: #28a745;
+    border-left-color: #28a745;
 }
 
-.floors ul {
-    list-style-type: none;
-}
-
-.floors ul li {
-    width: 50px;
-    float: left;
-    border: thin solid #eee;
-    text-align: center;
-}
-
-.floors ul .select {
-    background-color: #ccc;
-    color: #fff;
-}
-
-.rooms {
-    height: 30px;
-}
-
-.rooms ul {
-    list-style-type: none;
-}
-
-.rooms ul li {
-    width: 200px;
-    float: left;
-    border: thin solid #eee;
-    text-align: center;
-}
-
-.rooms ul .select {
-    background-color: #ccc;
-    color: #fff;
-}
-
-.meet_data {
-    margin: auto;
-    padding: 0;
+#nprogress .spinner {
+    z-index: 5000;
 }
