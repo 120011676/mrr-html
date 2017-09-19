@@ -265,17 +265,23 @@ $(function () {
     });
 
     $('body').keydown(function (e) {
-        console.log(e.which)
-        if ($('.mrr_add').is(":hidden") && $('.mrr_del').is(":hidden")) {
-            switch (e.which) {
-                case 8:
-                case 127:
-                    $('.reserve .btn_mrr_del').click();
-                    break;
-                case 65:
-                    $('.btn_mrr_add').click();
-                    break;
+        var addObj = $('.mrr_add');
+        var delObj = $('.mrr_del');
+        if (addObj.is(":hidden") && delObj.is(":hidden")) {
+            if (e.altKey && e.which === 65) {
+                $('.btn_mrr_add').click();
+            } else if (e.which === 8 || e.which === 127) {
+                $('.reserve .btn_mrr_del').click();
             }
+        } else if (e.altKey && e.which === 83) {
+            if (!addObj.is(":hidden")) {
+                addObj.find('.add_save').click();
+            } else if (!delObj.is(":hidden")) {
+                delObj.find('.del_save').click();
+            }
+        } else if (e.altKey && e.which === 67) {
+            addObj.modal('hide');
+            delObj.modal('hide');
         }
     }).find('.del_save').on('click', function () {
         if (!($(".mrr_del form").valid())) {
