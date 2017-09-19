@@ -266,7 +266,9 @@ $(function () {
 
     $('body').keydown(function (e) {
         if (e.which === 8 || e.which === 127) {
-            $('.reserve .btn_mrr_del').click();
+            if ($('.mrr_add').is(":hidden")) {
+                $('.reserve .btn_mrr_del').click();
+            }
         }
     }).find('.del_save').on('click', function () {
         if (!($(".mrr_del form").valid())) {
