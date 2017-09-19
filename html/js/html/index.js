@@ -265,9 +265,16 @@ $(function () {
     });
 
     $('body').keydown(function (e) {
-        if (e.which === 8 || e.which === 127) {
-            if ($('.mrr_add').is(":hidden")) {
-                $('.reserve .btn_mrr_del').click();
+        console.log(e.which)
+        if ($('.mrr_add').is(":hidden") && $('.mrr_del').is(":hidden")) {
+            switch (e.which) {
+                case 8:
+                case 127:
+                    $('.reserve .btn_mrr_del').click();
+                    break;
+                case 65:
+                    $('.btn_mrr_add').click();
+                    break;
             }
         }
     }).find('.del_save').on('click', function () {

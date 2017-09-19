@@ -192,3 +192,7 @@ label.error {
 #nprogress .spinner {
     z-index: 5000;
 }
+
+.btn-success.focus, .btn-success:focus {
+    box-shadow: none;
+}
