@@ -1,0 +1,106 @@
+
+.svg_datatime_div {
+    position: absolute;
+    border-radius: 100%;
+    z-index: 5000;
+    background-color: #fff;
+    border: thin dotted #28a745;
+    box-shadow: 0 0 20px #28a745;
+    margin-top: 15px;
+    margin-bottom: 50px;
+}
+
+.svg_datatime {
+    width: 520px;
+    height: 520px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.svg_datatime .svg_yyyy, .svg_datatime .svg_MM, .svg_datatime .svg_dd, .svg_datatime .svg_HH, .svg_datatime .svg_mm, .svg_datatime .svg_ss {
+    cx: 260;
+    cy: 260;
+    stroke: #28a745;
+    stroke-width: 1px;
+    stroke-linecap: round;
+    fill: none;
+
+}
+
+.svg_datatime .svg_yyyy {
+    r: 235;
+}
+
+.svg_datatime .svg_MM {
+    r: 210;
+}
+
+.svg_datatime .svg_dd {
+    r: 185;
+}
+
+.svg_datatime .svg_HH {
+    r: 135;
+}
+
+.svg_datatime .svg_mm {
+    r: 110;
+}
+
+.svg_datatime .svg_ss {
+    r: 85;
+}
+
+.svg_datatime .text {
+    x: 250;
+    y: 250;
+    stroke: #28a745;
+    stroke-width: 1px;
+    stroke-linecap: round;
+    fill: #28a745;
+    text-anchor: middle;
+}
+
+.svg_datatime .svg_yyyy_btn, .svg_datatime .svg_MM_btn, .svg_datatime .svg_dd_btn, .svg_datatime .svg_HH_btn, .svg_datatime .svg_mm_btn, .svg_datatime .svg_ss_btn {
+    r: 5;
+    fill: #28a745;
+}
+
+.svg_datatime .svg_yyyy_btn {
+    cx: 250;
+    cy: 25;
+}
+
+.svg_datatime .svg_MM_btn {
+    cx: 250;
+    cy: 50;
+}
+
+.svg_datatime .svg_dd_btn {
+    cx: 250;
+    cy: 75;
+}
+
+.svg_datatime .svg_HH_btn {
+    cx: 250;
+    cy: 125;
+}
+
+.svg_datatime .svg_mm_btn {
+    cx: 250;
+    cy: 150;
+}
+
+.svg_datatime .svg_ss_btn {
+    cx: 250;
+    cy: 175;
+}
+
+ .no_select {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

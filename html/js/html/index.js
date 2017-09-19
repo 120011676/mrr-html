@@ -11,13 +11,13 @@ $(function () {
 
     Date.prototype.format = function (fmt) {
         var o = {
-            "M+": this.getMonth() + 1, //月份
-            "d+": this.getDate(), //日
-            "H+": this.getHours(), //小时
-            "m+": this.getMinutes(), //分
+            "M+": this.getMonth() + 1,
+            "d+": this.getDate(),
+            "H+": this.getHours(),
+            "m+": this.getMinutes(),
             "s+": this.getSeconds(), //秒
-            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
-            "S": this.getMilliseconds() //毫秒
+            "q+": Math.floor((this.getMonth() + 3) / 3),
+            "S": this.getMilliseconds()
         };
         if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
         for (var k in o)
@@ -167,7 +167,6 @@ $(function () {
                     }).appendTo(floors);
                 }
             }).appendTo(citys);
-
         }
         citys.find(".btn-success").click().parent().parent().find(".floors>.btn-success").click();
     });
@@ -212,6 +211,8 @@ $(function () {
         if (e.which === 13 || e.which === 108) {
             $(this).find('.add_save').click();
         }
+    }).on('click', function () {
+        $('.svg_datatime_div').remove();
     });
 
     $('.mrr_add .add_save').on('click', function () {
@@ -237,6 +238,7 @@ $(function () {
             data = $.parseJSON(data);
             if (data && data.status) {
                 $('.mrr_add').modal('hide');
+                $('.date>.btn-success').click();
                 return;
             }
             $('.mrr_add .modal-body .alert').alert('close');
@@ -295,4 +297,13 @@ $(function () {
         }
     });
 
+    $('.datetime').on('click', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+    }).datetime({
+        ss: false,
+        close: function () {
+            $(".mrr_add form").valid();
+        }
+    });
 });
