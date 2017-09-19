@@ -196,3 +196,16 @@ label.error {
 .btn-success.focus, .btn-success:focus {
     box-shadow: none;
 }
+
+.hand {
+    color: #28a745;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.foot {
+    color: #28a745;
+    text-align: center;
+    margin-top: 40px;
+}
