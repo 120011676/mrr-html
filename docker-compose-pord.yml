@@ -4,6 +4,8 @@ services:
     image: mongo
     networks:
       - mrr
+    volumes:
+      - ./mongo/data:/data
     ports:
       - 27017:27017
   server:
@@ -17,9 +19,6 @@ services:
       - 8080:8080
   html:
      image: mrr-html
-     build: .
-     volumes:
-       - ./html/:/usr/share/nginx/html/
      environment:
        - MRR_URI=http://server:8080/
      networks:

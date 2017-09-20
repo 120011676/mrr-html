@@ -8,6 +8,9 @@ RUN apk --update add ca-certificates && \
     ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime && \
     echo ${TZ} > /etc/timezone
 
-#COPY html /usr/share/nginx/html
+COPY nginx/default.conf /etc/nginx/conf.d/
+COPY html /usr/share/nginx/html
+
+CMD sed -i s^\${MRR_URI}^${MRR_URI}^g /etc/nginx/conf.d/default.conf && nginx -g "daemon off;"
 
 EXPOSE 80
