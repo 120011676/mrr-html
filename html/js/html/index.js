@@ -1,5 +1,5 @@
 $(function () {
-
+    var body = $("body");
     $.ajaxSetup({
         beforeSend: function () {
             NProgress.start();
@@ -26,7 +26,7 @@ $(function () {
     };
 
     function chart(data) {
-        var yh = ((data.y.length ) * 40);
+        var yh = ((data.y.length) * 40);
         var yhh = 40;
         var sh = yh + yhh;
         var left = "5%";
@@ -116,6 +116,7 @@ $(function () {
                 };
                 chart(data);
             }
+            body.show()
         });
     }
 
@@ -168,7 +169,8 @@ $(function () {
                 }
             }).appendTo(citys);
         }
-        citys.find(".btn-success").click().parent().parent().find(".floors>.btn-success").click();
+        var array = citys.find(".btn-success").click().parent().parent().find(".floors>.btn-success");
+        array.length > 0 ? array.click() : body.show();
     });
 
     $('.mrr_add').on('show.bs.modal', function () {

@@ -19,5 +19,6 @@ CACHE:
 /conf/citys.json
 
 NETWORK:
+*
 
 FALLBACK:
