@@ -1,0 +1,23 @@
+CACHE MANIFEST
+
+# version 1.0.0
+
+CACHE:
+/favicon.ico
+/index.html
+/js/nprogress-0.2.0/nprogress.css
+/js/nprogress-0.2.0/nprogress.js
+/js/jquery-3.2.1.min.js
+/js/popper.min.js
+/js/bootstrap-4.0.0-beta-dist/css/bootstrap.min.css
+/js/bootstrap-4.0.0-beta-dist/js/bootstrap.min.js
+/js/jquery-validation-1.17.0/dist/jquery.validate.min.js
+/js/datetime/datatime.css
+/js/datetime/datatime.js
+/js/html/index.js
+/css/index.css
+/conf/citys.json
+
+NETWORK:
+
+FALLBACK:
